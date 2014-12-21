@@ -1,0 +1,53 @@
+<head>
+  <title>Trein</title>
+</head>
+
+<body>
+  <h1>Trein</h1>
+  {{> status}}
+  {{> form}}
+  {{> advice}}
+</body>
+
+<template name="form">
+    {{>vanForm}}
+    {{>naarForm}}
+    <button class="switch">Switch</button>
+</template>
+
+<template name="vanForm">
+    <p>Van:</p>
+  <select>
+      {{>stationSelect type="van"}}
+  </select>
+</template>
+
+<template name="naarForm">
+    <p>Naar</p>
+    <select>
+        {{>stationSelect type="naar"}}
+    </select>
+</template>
+
+<template name="stationSelect">
+    {{#each stations type=type}}
+        <option value="{{_id}}" {{active}}>{{Namen.Lang}}</option>
+    {{/each}}
+</template>
+
+<template name="status">
+    <h1>Van Naar</h1>
+    <p>{{van}} - {{naar}}</p>
+</template>
+
+<template name="adviceFirst">
+    <h1>{{timeLeft advice.ActueleVertrekTijd}}</h1>
+</template>
+
+<template name="advice">
+    {{>adviceFirst}}
+
+    {{#each advice}}
+        <p>{{formatDate ActueleVertrekTijd}} - {{formatDate ActueleAankomstTijd}}</p>
+    {{/each}}
+</template>
