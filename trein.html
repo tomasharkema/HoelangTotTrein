@@ -13,32 +13,31 @@
 <template name="form">
     {{>vanForm}}
     {{>naarForm}}
-    <button class="switch">Switch</button>
+    <button class="switch btn">Switch</button>
 </template>
 
 <template name="vanForm">
   <select>
-      {{>stationSelect type="van"}}
+      {{#each stations}}
+          <option value="{{_id}}" {{selected}}>{{Namen.Lang}}</option>
+      {{/each}}
   </select>
 </template>
 
 <template name="naarForm">
     <select>
-        {{>stationSelect type="naar"}}
+        {{#each stations}}
+            <option value="{{_id}}" {{selected}}>{{Namen.Lang}}</option>
+        {{/each}}
     </select>
-</template>
-
-<template name="stationSelect">
-    {{#each stations type=type}}
-        <option value="{{_id}}" {{active}}>{{Namen.Lang}}</option>
-    {{/each}}
 </template>
 
 <template name="adviceFirst">
     <div class="highlight well">
         <p><strong>{{formatDate advice.ActueleVertrekTijd}} - {{van}}</strong></p>
         <h2>{{vertrekSpoor}}</h2>
-        <h1 class="time">{{timeLeft advice.ActueleVertrekTijd}}</h1>
+        <h1 class="time">{{timeLeft advice.ActueleVertrekTijd}}<small>{{vertraging}}</small></h1>
+        <small>{{reisDeel}}</small>
         <p><strong>{{formatDate advice.ActueleAankomstTijd}} - {{naar}}</strong></p>
     </div>
 </template>
@@ -48,7 +47,7 @@
     <div class="list-group">
     {{#each advice}}
         <div class="list-group-item">
-        <p>{{formatDate ActueleVertrekTijd}} - {{formatDate ActueleAankomstTijd}}</p>
+            <p>{{formatDate ActueleVertrekTijd}} - {{formatDate ActueleAankomstTijd}} - {{timeLeft ActueleVertrekTijd}} - {{Status}}{{vertraging}}</p>
         </div>
     {{/each}}
     </div>
