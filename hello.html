@@ -3,10 +3,11 @@
 </head>
 
 <body>
-  <h1>Trein</h1>
-  {{> status}}
-  {{> form}}
-  {{> advice}}
+    <div class="container">
+        <h1>Trein</h1>
+        {{> form}}
+        {{> advice}}
+    </div>
 </body>
 
 <template name="form">
@@ -16,14 +17,12 @@
 </template>
 
 <template name="vanForm">
-    <p>Van:</p>
   <select>
       {{>stationSelect type="van"}}
   </select>
 </template>
 
 <template name="naarForm">
-    <p>Naar</p>
     <select>
         {{>stationSelect type="naar"}}
     </select>
@@ -35,19 +34,22 @@
     {{/each}}
 </template>
 
-<template name="status">
-    <h1>Van Naar</h1>
-    <p>{{van}} - {{naar}}</p>
-</template>
-
 <template name="adviceFirst">
-    <h1>{{timeLeft advice.ActueleVertrekTijd}}</h1>
+    <div class="highlight well">
+        <p><strong>{{formatDate advice.ActueleVertrekTijd}} - {{van}}</strong></p>
+        <h2>{{vertrekSpoor}}</h2>
+        <h1 class="time">{{timeLeft advice.ActueleVertrekTijd}}</h1>
+        <p><strong>{{formatDate advice.ActueleAankomstTijd}} - {{naar}}</strong></p>
+    </div>
 </template>
 
 <template name="advice">
     {{>adviceFirst}}
-
+    <div class="list-group">
     {{#each advice}}
+        <div class="list-group-item">
         <p>{{formatDate ActueleVertrekTijd}} - {{formatDate ActueleAankomstTijd}}</p>
+        </div>
     {{/each}}
+    </div>
 </template>

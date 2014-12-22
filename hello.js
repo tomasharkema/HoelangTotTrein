@@ -6,6 +6,10 @@ if (Meteor.isClient) {
   Session.setDefault("naar", "");
   Session.setDefault("advice", {});
 
+  function filterAdvice() {
+    return _.filter(Session.get("advice").ReisMogelijkheid, function(item){return new Date(item.ActueleVertrekTijd).getTime() > Session.get("currentTime") - 60*60*1000;});
+  };
+
   Meteor.setInterval(function() {
     Session.set("currentTime", Date.now());
   }, 1000);
@@ -15,6 +19,8 @@ if (Meteor.isClient) {
       if (!err) Session.set("advice", advice);
     });
   }
+
+  advice();
 
   Meteor.setInterval(function() {
     advice();
@@ -29,15 +35,6 @@ if (Meteor.isClient) {
     var now = Date.now();
     var d = new Date(date.getTime() - (now - 60*60*1000));
     return moment(d).format("mm:ss");
-  });
-
-  Template.status.helpers({
-    van: function () {
-      return Stations.findOne({_id:Session.get("van")}).Namen.Lang;
-    },
-    naar:function(){
-      return Stations.findOne({_id:Session.get("naar")}).Namen.Lang;
-    }
   });
 
   Template.form.events({
@@ -76,13 +73,22 @@ if (Meteor.isClient) {
 
   Template.advice.helpers({
     advice:function(){
-      return _.filter(Session.get("advice").ReisMogelijkheid, function(item){return new Date(item.ActueleVertrekTijd).getTime() > Session.get("currentTime") - 60*60*1000;});
+      return filterAdvice();
     }
   });
 
   Template.adviceFirst.helpers({
+    van: function () {
+      return Stations.findOne({_id:Session.get("van")}).Namen.Lang;
+    },
+    naar:function(){
+      return Stations.findOne({_id:Session.get("naar")}).Namen.Lang;
+    },
+    vertrekSpoor:function(){
+      return filterAdvice()[0].ReisDeel.ReisStop[0].Spoor["#"];
+    },
     advice:function(){
-      return _.filter(Session.get("advice").ReisMogelijkheid, function(item){return new Date(item.ActueleVertrekTijd).getTime() > Session.get("currentTime") - 60*60*1000;})[0];
+      return filterAdvice()[0];
     }
   });
 }

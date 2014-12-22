@@ -7,6 +7,7 @@ binary-heap@1.0.2
 blaze@2.0.4
 blaze-tools@1.0.2
 boilerplate-generator@1.0.2
+bootstrap@1.0.1
 callback-hook@1.0.2
 check@1.0.3
 ddp@1.0.13
@@ -23,6 +24,7 @@ insecure@1.0.2
 jquery@1.0.2
 json@1.0.2
 launch-screen@1.0.1
+less@1.0.12
 livedata@1.0.12
 logging@1.0.6
 meteor@1.1.4
