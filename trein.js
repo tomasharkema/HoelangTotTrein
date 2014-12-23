@@ -52,11 +52,7 @@ if (Meteor.isClient) {
         return moment(d).format("mm:ss");
       }
     } else {
-      if (time > 60*60*1000) {
-        return moment(d).format("HH:mm");
-      } else {
-        return moment(d).format("mm:ss");
-      }
+      return moment(d).format("HH:mm");
     }
   });
 
